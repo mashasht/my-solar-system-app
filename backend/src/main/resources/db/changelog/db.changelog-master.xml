@@ -1,0 +1,73 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="maria">
+        <createTable tableName="planet">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="radius" type="DOUBLE" />
+            <column name="orbit_radius" type="DOUBLE" />
+            <column name="moons" type="INT" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="maria">
+        <!-- Insert all planets -->
+        <insert tableName="planet">
+            <column name="name" value="Mercury" />
+            <column name="radius" value="2439.7" />
+            <column name="orbit_radius" value="57.9" />
+            <column name="moons" value="0" />
+        </insert>
+        <insert tableName="planet">
+            <column name="name" value="Venus" />
+            <column name="radius" value="6051.8" />
+            <column name="orbit_radius" value="108.2" />
+            <column name="moons" value="0" />
+        </insert>
+        <insert tableName="planet">
+            <column name="name" value="Earth" />
+            <column name="radius" value="6371.0" />
+            <column name="orbit_radius" value="149.6" />
+            <column name="moons" value="1" />
+        </insert>
+        <insert tableName="planet">
+            <column name="name" value="Mars" />
+            <column name="radius" value="3389.5" />
+            <column name="orbit_radius" value="227.9" />
+            <column name="moons" value="2" />
+        </insert>
+        <insert tableName="planet">
+            <column name="name" value="Jupiter" />
+            <column name="radius" value="69911" />
+            <column name="orbit_radius" value="778.3" />
+            <column name="moons" value="79" />
+        </insert>
+        <insert tableName="planet">
+            <column name="name" value="Saturn" />
+            <column name="radius" value="58232" />
+            <column name="orbit_radius" value="1427" />
+            <column name="moons" value="82" />
+        </insert>
+        <insert tableName="planet">
+            <column name="name" value="Uranus" />
+            <column name="radius" value="25362" />
+            <column name="orbit_radius" value="2871" />
+            <column name="moons" value="27" />
+        </insert>
+        <insert tableName="planet">
+            <column name="name" value="Neptune" />
+            <column name="radius" value="24622" />
+            <column name="orbit_radius" value="4495" />
+            <column name="moons" value="14" />
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
