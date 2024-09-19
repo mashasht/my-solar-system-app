@@ -18,9 +18,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())  // Require authentication for all requests
-                .httpBasic(withDefaults())  // Enable basic authentication
-                .cors(withDefaults());      // Enable CORS globally with defaults
+                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .httpBasic(withDefaults())
+                .cors(withDefaults());
 
         return http.build();
     }
@@ -29,8 +29,8 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("http://localhost:3000");
-        corsConfiguration.addAllowedMethod("*");  // Allow all HTTP methods (GET, POST, etc.)
-        corsConfiguration.addAllowedHeader("*");  // Allow all headers
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedHeader("*");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);

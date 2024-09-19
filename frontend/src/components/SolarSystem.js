@@ -3,12 +3,12 @@ import { Container, Typography } from '@mui/material';
 import DeckGL from '@deck.gl/react';
 import { OrbitView } from '@deck.gl/core';
 import { SimpleMeshLayer } from '@deck.gl/mesh-layers';
-import { SphereGeometry } from 'three';  // Import SphereGeometry from Three.js
-import { getPlanets } from '../services/api';  // Import the API service
+import { SphereGeometry } from 'three';
+import { getPlanets } from '../services/api';
 
 const INITIAL_VIEW_STATE = {
-  target: [0, 0, 0],  // Center the view
-  zoom: -1,  // Slightly zoom out
+  target: [0, 0, 0],
+  zoom: -1,
   minZoom: -5,
   maxZoom: 5,
   pitch: 45,

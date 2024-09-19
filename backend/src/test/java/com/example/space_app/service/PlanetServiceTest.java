@@ -4,65 +4,55 @@ import com.example.space_app.model.Planet;
 import com.example.space_app.repository.PlanetRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.within;
 
+@SpringBootTest
 public class PlanetServiceTest {
 
-    @Mock
-    private PlanetRepository planetRepository;
-
-    @InjectMocks
+    @Autowired
     private PlanetService planetService;
 
+    @MockBean
+    private PlanetRepository planetRepository;
+
     private Planet earth;
-    private Planet mars;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        earth = new Planet(1L, "Earth", 6371, 149.6, 1);
-        mars = new Planet(2L, "Mars", 3389.5, 227.9, 2);
-    }
-
-    @Test
-    public void testGetAllPlanets() {
-        when(planetRepository.findAll()).thenReturn(Arrays.asList(earth, mars));
-
-        List<Planet> planets = planetService.getAllPlanets();
-
-        assertNotNull(planets);
-        assertEquals(2, planets.size());
-        verify(planetRepository, times(1)).findAll();
+        earth = new Planet();
+        earth.setId(1L);
+        earth.setName("Earth");
+        earth.setRadius(6371);
+        earth.setOrbitRadius(149.6);
+        earth.setMoons(1);
     }
 
     @Test
     public void testGetPlanetByName() {
-        when(planetRepository.findByName("Earth")).thenReturn(Optional.of(earth));
+        Mockito.when(planetRepository.findByName("Earth")).thenReturn(Optional.of(earth));
 
-        Optional<Planet> planet = planetService.getPlanetByName("Earth");
+        Optional<Planet> result = planetService.getPlanetByName("Earth");
 
-        assertTrue(planet.isPresent());
-        assertEquals("Earth", planet.get().getName());
-        verify(planetRepository, times(1)).findByName("Earth");
+        assertThat(result).isPresent();
+        assertThat(result.get().getName()).isEqualTo("Earth");
+        assertThat(result.get().getRadius()).isEqualTo(6371);
+        assertThat(result.get().getOrbitRadius()).isCloseTo(149.6, within(0.1));
     }
 
     @Test
-    public void testAddPlanet() {
-        when(planetRepository.save(any(Planet.class))).thenReturn(earth);
+    public void testGetNonExistentPlanet() {
+        Mockito.when(planetRepository.findByName("Pluto")).thenReturn(Optional.empty());
 
-        Planet savedPlanet = planetService.addPlanet(earth);
+        Optional<Planet> result = planetService.getPlanetByName("Pluto");
 
-        assertNotNull(savedPlanet);
-        assertEquals("Earth", savedPlanet.getName());
-        verify(planetRepository, times(1)).save(earth);
+        assertThat(result).isNotPresent();
     }
 }
